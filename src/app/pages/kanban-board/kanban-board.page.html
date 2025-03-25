@@ -1,0 +1,157 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Канбан доска</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addColumn()">Добавить доску</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Строка поиска -->
+  <div class="search-container">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      placeholder="Поиск по тикетам..."
+      class="search-input"
+    />
+  </div>
+
+  <div class="kanban-container">
+    <div
+      class="kanban-column"
+      *ngFor="let column of columns; let i = index"
+      (dragstart)="onColumnDragStart($event, i)"
+      (dragover)="onColumnDragOver($event)"
+      (drop)="onColumnDrop($event, i)"
+      draggable="true"
+      (touchstart)="touchStartColumn($event, column, i)"
+      (touchend)="touchEndColumn($event, column, i)"
+    >
+      <div class="column-header" (click)="selectColumnToMove(column)">
+        <input
+          [(ngModel)]="column.name"
+          (blur)="updateColumnName(column)"
+          class="column-title"
+        />
+        <ion-button fill="clear" color="danger" (click)="deleteColumn(column)">
+          Удалить
+        </ion-button>
+      </div>
+
+      <!-- Пустая колонка -->
+      <div
+        class="drop-zone"
+        *ngIf="getFilteredTickets(column).length === 0"
+        (dragover)="onColumnDragOver($event)"
+        (drop)="onTicketDrop($event, column)"
+        (click)="onMobileDrop(column)"
+      >
+        Перетащите тикет сюда
+      </div>
+
+      <!-- Тикеты -->
+      <div
+        class="ticket"
+        *ngFor="let ticket of getFilteredTickets(column)"
+        draggable="true"
+        (dragstart)="onTicketDragStart($event, ticket, column)"
+        (touchstart)="touchStartTicket($event, ticket, column)"
+        (touchmove)="touchMove($event)"
+        (touchend)="touchEndTicket($event, column)"
+        (mousedown)="touchStartTicketSimulate($event, ticket, column)"
+        (click)="selectTicketToMove(ticket)"
+      >
+        <!-- Название -->
+        <input
+          type="text"
+          [(ngModel)]="ticket.title"
+          (blur)="updateTicket(ticket)"
+          class="ticket-input"
+        />
+
+        <!-- Описание -->
+        <textarea
+          [(ngModel)]="ticket.description"
+          class="ticket-description"
+          placeholder="Описание тикета..."
+          (blur)="updateTicket(ticket)"
+        ></textarea>
+
+        <!-- Внешняя ссылка -->
+        <input
+          type="url"
+          [(ngModel)]="ticket.link"
+          class="ticket-input"
+          placeholder="Внешняя ссылка"
+          (blur)="updateTicket(ticket)"
+        />
+
+        <!-- Перемещение -->
+        <label>Переместить в:</label>
+        <select
+          [(ngModel)]="ticketColumnMap[ticket.id]"
+          (change)="moveTicket(ticket)"
+          class="ticket-select"
+        >
+          <option *ngFor="let col of columns" [value]="col.name">
+            {{ col.name }}
+          </option>
+        </select>
+
+        <!-- Исполнители -->
+        <label>Исполнители:</label>
+        <select
+          [(ngModel)]="ticket.assignee"
+          (change)="updateTicket(ticket)"
+          class="ticket-assignee"
+        >
+          <option [value]="null" disabled selected>Выберите исполнителя</option>
+          <option *ngFor="let assignee of assignees" [value]="assignee.id">
+            {{ assignee.name }}
+          </option>
+        </select>
+
+        <!-- Теги -->
+        <input
+          type="text"
+          [(ngModel)]="ticket.tags"
+          placeholder="Теги (через запятую)"
+          (blur)="updateTicket(ticket)"
+          class="ticket-input"
+        />
+
+        <!-- Файлы -->
+        <input type="file" (change)="onFileSelected($event, ticket)" multiple />
+        <ul>
+          <li *ngFor="let file of ticket.files">{{ file.name }}</li>
+        </ul>
+
+        <!-- Кнопки -->
+        <div class="ticket-actions">
+          <ion-button fill="clear" (click)="duplicateTicket(ticket)">Копия</ion-button>
+          <ion-button fill="clear" color="danger" (click)="deleteTicket(ticket)">
+            Удалить
+          </ion-button>
+        </div>
+      </div>
+
+      <!-- Дроп-зона для заполненных колонок -->
+      <div
+        class="drop-zone"
+        *ngIf="getFilteredTickets(column).length > 0"
+        (dragover)="onColumnDragOver($event)"
+        (drop)="onTicketDrop($event, column)"
+        (click)="onMobileDrop(column)"
+      >
+        Перетащите тикет сюда
+      </div>
+
+      <!-- Кнопка добавления тикета -->
+      <ion-button expand="block" size="small" (click)="addTicket(column)">
+        Добавить тикет
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

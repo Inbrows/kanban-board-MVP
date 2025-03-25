@@ -1,0 +1,189 @@
+:host {
+  display: block;
+  background: #121212;
+  color: white;
+}
+
+.kanban-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  background: #121212;
+  flex-wrap: wrap;
+}
+
+/* Стили для строки поиска */
+.search-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.search-input {
+  width: 90%;
+  padding: 10px;
+  font-size: 16px;
+  background: #222; /* Темный фон */
+  color: white; /* Белый текст */
+  border: 1px solid #555;
+  border-radius: 5px;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: white; /* Белый текст для плейсхолдера */
+}
+
+.kanban-column {
+  background: #2b2b2b;
+  padding: 15px;
+  border-radius: 10px;
+  width: 30%;
+  min-height: 300px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  position: relative;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.column-title {
+  background: transparent;
+  border: 1px solid #888;
+  color: white;
+  font-size: 18px;
+  flex: 1;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.column-title:focus {
+  outline: none;
+  border: 1px solid #fff;
+}
+
+.ticket {
+  background: #444;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #888;
+}
+
+/* Стили для всех текстовых полей */
+.ticket-input,
+.ticket-description,
+.ticket-link,
+.ticket-select,
+.ticket-assignee {
+  background: #222;
+  border: 1px solid #aaa;
+  color: #ddd;
+  font-size: 14px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.ticket-input:focus,
+.ticket-description:focus,
+.ticket-link:focus,
+.ticket-select:focus,
+.ticket-assignee:focus {
+  outline: none;
+  border: 1px solid #fff;
+}
+
+/* Исполнители */
+.ticket-assignee {
+  background: #222;
+  color: white;
+  border: 1px solid #bbb;
+}
+
+/* Список исполнителей */
+.ticket-assignee option {
+  background: #000;
+  color: white;
+}
+
+/* Улучшенные стили для кнопок */
+.ticket-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.ticket-actions ion-button {
+  font-size: 14px;
+  color: #ff4d4d;
+}
+
+/* Подписи для полей */
+.label {
+  color: #ccc;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* Доработка дроп-зоны */
+.drop-zone {
+  border: 2px dashed #555;
+  padding: 20px;
+  text-align: center;
+  color: #bbb;
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* Адаптация под мобильные устройства */
+@media screen and (max-width: 768px) {
+  .kanban-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .kanban-column {
+    width: 90%;
+    margin-bottom: 15px;
+  }
+
+  .ticket {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .ticket-select,
+  .ticket-assignee {
+    background: #555;
+    color: #fff;
+    border: 1px solid #aaa;
+  }
+
+  .ticket-select option,
+  .ticket-assignee option {
+    background: #555;
+    color: white;
+  }
+
+  .ticket-description,
+  .ticket-link {
+    color: #eee;
+  }
+}
