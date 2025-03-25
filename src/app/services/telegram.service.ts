@@ -20,7 +20,7 @@ export class TelegramService {
         parse_mode: 'HTML',
       })
       .subscribe({
-        next: () => console.log('✅ Сообщение отправлено'),
+        next: () => console.log('Сообщение отправлено'),
         error: (error) => console.error('Ошибка отправки сообщения', error),
       });
   }
@@ -35,7 +35,7 @@ export class TelegramService {
     formData.append('parse_mode', 'HTML');
 
     this.http.post(url, formData).subscribe({
-      next: () => console.log('✅ Сообщение с файлом отправлено'),
+      next: () => console.log('Сообщение с файлом отправлено'),
       error: (err) => console.error('Ошибка при отправке файла:', err),
     });
   }
