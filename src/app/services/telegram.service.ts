@@ -20,7 +20,7 @@ export class TelegramService {
         parse_mode: 'HTML',
       })
       .subscribe({
-        next: () => console.log('Сообщение отправлено'),
+        next: () => console.log('✅ Сообщение отправлено'),
         error: (error) => console.error('Ошибка отправки сообщения', error),
       });
   }
