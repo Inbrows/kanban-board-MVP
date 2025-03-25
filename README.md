@@ -44,8 +44,3 @@ ionic serve
 Для запуска тестов:
 ```bash
 npx ng test
-
-## Установка и запуск проекта
-
-npm install
-ionic serve
