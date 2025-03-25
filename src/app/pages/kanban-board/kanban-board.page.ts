@@ -54,7 +54,7 @@ export class KanbanBoardPage {
   ];
 
   assignees: Assignee[] = [
-    { id: 1, name: 'Алексей', telegramId: '123456789' },
+    { id: 1, name: 'Иван', telegramId: '123456789' },
     { id: 2, name: 'Мария', telegramId: '357289590' },
     { id: 3, name: 'Дмитрий', telegramId: '933160179' },
     { id: 4, name: 'Анна', telegramId: '112233445' }
